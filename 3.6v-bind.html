@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <a v-bind:href="googleUrl">구글</a>
+        <a :href="naverUrl">네이버</a>
+        <img v-bind:src="randomImageUrl" alt="altText">
+    </div>
+    <div id='app-2'>
+        <span v-bind:title="message">
+            마우스를 올리면 동적 바인딩된 타이틀을 볼 수 있다.
+        </span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                googleUrl: 'https://google.com',
+                naverUrl: 'https://naver.com',
+                randomImageUrl: 'https://picsum.photos/200',
+                altText: 'random-image'  
+            }
+        }),
+
+        const app2 = new Vew({
+            el: '#app-2',
+            data: {
+                message: '이 페이지는'+ new Data() + '에 로드 되었습니다.'
+            }
+        })
+    </script>
+</body>
+</html>
