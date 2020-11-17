@@ -7,10 +7,12 @@
 </head>
 <body>
     <div id="app">
-        <h1>{{message}}</h1>
+        <h1>{{ message }}</h1>
         <input @keyup="onInputChange" type="text">
         <hr>
         <input @keyup="onInputChange" type="text" :value="message">
+        <hr>
+        <input v-model="message" type="text">
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
