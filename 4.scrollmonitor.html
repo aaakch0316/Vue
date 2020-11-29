@@ -18,7 +18,8 @@
             <h5>{{ photo.title }}</h5>
             <img :src="photo.thumbnailUrl" :alt="photo.title">
         </div>
-        <button @click='getPhotos' class="button-bottom">GET PHOTOS</button>
+        <!-- <button @click='getPhotos' class="button-bottom">GET PHOTOS</button> -->
+        <button @click='scrollToTop' class="button-bottom">^</button>
     </div>
 
     <div id="bottomSensor"></div>
@@ -55,11 +56,27 @@
                     const bottomSensor = document.querySelector('#bottomSensor')
                     const watcher = scrollMonitor.create(bottomSensor)
                     watcher.enterViewport(() => {
-                        console.log('____BOTTOM_____') 
-                        this.getPhotos()
-        })
+                        // console.log('____BOTTOM_____') 
+                        setTimeout(() => (
+                            this.getPhotos()
+                        ), 500)
+                        // this.getPhotos()
+                    })
 
-                }
+                },
+                scrollToTop: function() {
+                    window.scroll(0,0) //window도 삭제해도됨
+                },
+
+                loadUntilViewportIsFull: function () {
+                    const bottomSensor = document.querySelector('#bottomSensor')
+                    const watcher = scrollMonitor.create(bottomSensor)
+                    if (watchar.isFullyInviewport) {
+                        this.getPhotos() //있으면 가져와. 없으면 가져오지마
+                    }
+                },
+
+
             },
             
             created: function (){
@@ -68,7 +85,10 @@
             },
             mounted: function() {
                 this.addScrollWatcher()
-            }
+            },
+            updated: function() {
+                this.loadUntilViewportIsFull()
+            },
         })
         
 
