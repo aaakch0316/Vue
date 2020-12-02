@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue Tutorial</title>
+</head>
+<body>
+
+  <div id="app">
+    <h1>Bankrruped</h1>
+    {{ bankrrupedPeople }}
+  </div>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+      var app = new Vue({
+        el: '#app',
+        data: {
+            accounts: [
+                { name: 'neo', balance: 500, isBankrruped: true },
+                { name: 'tak', balance: 700, isBankrruped: false },
+                { name: 'john', balance: 350, isBankrruped: false },
+                { name: 'justin', balance: 200, isBankrruped: true },
+            ],
+        },
+        methods: {
+        },
+
+        computed: {
+            bankrrupedPeople: function () {
+                const newArr = this.accounts.filter((account) => {
+                    return account.isBankrruped
+                })
+                return newArr
+            }
+        }
+        
+      })
+  </script>
+</body>
+</html>
