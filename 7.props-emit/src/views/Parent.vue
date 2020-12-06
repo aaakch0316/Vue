@@ -8,14 +8,13 @@
 <script>
 import Child from '../components/Child.vue'
 export default {
-  components: { Child },
     name: 'Parent',
     data() {
         return {
             parentMsg: '부모에서 내리는 메시지',
         }
     },
-    compotntes: {
+    components: {
         // Child, key와 value가 같으면 한번만 쓰는거다.
         Child,
     }
