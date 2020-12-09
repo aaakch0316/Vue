@@ -1,14 +1,19 @@
 <template>
   <div class="container">
     <SearchBar @input-change="onInputChange" />
-    <VideoList :videos="videos" />
+    <div class="row">
+      <VideoDetail :video="selectedVideo" />
+      <VideoList @video-select="onVideoSelect" :videos="videos" />
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+
 import SearchBar from './components/SearchBar.vue'
 import VideoList from './components/VideoList.vue'
+import VideoDetail from './components/VideoDetail.vue'
 
 // .env.local 파일에 작성한 변수명이 접두사가
 // VUE_APP_ 으로 시작한다면 자동으로 설정된다.
@@ -21,11 +26,13 @@ export default {
   components: {
     SearchBar,
     VideoList,
+    VideoDetail,
   },
   data() {
     return {
       inputValue: '',
       videos: [],
+      selectedVideo: null,
     }
   },
   methods: {
@@ -39,8 +46,21 @@ export default {
           q: this.inputValue,
         }
       })
-        .then(res => this.videos = res.data.items)
+      
+        .then(res => { 
+          this.videos = res.data.items.forEach(item => {
+            const parser = new DOMParser()
+            const doc = parser.parseFromString(item.snippet.title, 'text/html')
+            item.snippet.title = doc.body.innerText
+          })
+          this.videos = res.data.items
+        })
         .catch(err => console.error(err))
+    },
+    onVideoSelect(video) {
+      console.log('App.vue arrive')
+      console.log(video)
+      this.selectedVideo = video
     }
   }
 }
